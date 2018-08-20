@@ -1,0 +1,9 @@
+[submodule "ureg"]
+	path = ureg
+	url = git@github.com:overseaslabs/example-user-registry.git
+[submodule "mailer"]
+	path = mailer
+	url = git@github.com:overseaslabs/example-mailer.git
+[submodule "postgres"]
+	path = postgres
+	url = git@github.com:overseaslabs/example-postgres.git

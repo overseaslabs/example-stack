@@ -1,0 +1,43 @@
+version: "3.6"
+services:
+    postgres:
+        image: overseaslabs/example-postgres:latest
+        networks:
+            - example_backend
+        volumes:
+            - example_postgres_db:/var/lib/postgresql/data/pgdata
+        ports:
+            - 5432:5432
+        env_file:
+            - postgres.env
+            - ureg.env
+
+    redis:
+        image: redis:latest
+        networks:
+            - example_backend
+        volumes:
+            - example_postgres_db:/var/lib/postgresql/data/pgdata
+        ports:
+            - 6739:6739
+
+    #User registry microservice
+    ureg:
+        image: overseaslabs/example-ureg:latest
+        networks:
+            - example_backend
+            - example_frontend
+        ports:
+            - 8080:8080
+        env_file:
+            - ureg.env
+
+volumes:
+    #named volumes for storing the DB files
+    example_postgres_db:
+
+networks:
+    example_frontend:
+        driver: "overlay"
+    example_backend:
+        driver: "overlay"
