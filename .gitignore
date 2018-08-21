@@ -2,3 +2,4 @@
 ureg.env
 postgres.env
 mailer.env
+.env
