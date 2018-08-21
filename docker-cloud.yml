@@ -1,5 +1,6 @@
 version: "3.6"
 services:
+    #Postgres database server
     postgres:
         image: overseaslabs/example-postgres:latest
         networks:
@@ -12,6 +13,7 @@ services:
             - postgres.env
             - ureg.env
 
+    #Redis server
     redis:
         image: redis:latest
         networks:
@@ -19,7 +21,7 @@ services:
         volumes:
             - example_postgres_db:/var/lib/postgresql/data/pgdata
         ports:
-            - 6739:6739
+            - 6379:6379
 
     #User registry microservice
     ureg:
@@ -29,6 +31,16 @@ services:
             - example_frontend
         ports:
             - 8080:8080
+        env_file:
+            - ureg.env
+
+    #Email sending and reporting
+    mailer:
+        image: overseaslabs/example-mailer:latest
+        networks:
+            - example_backend
+        ports:
+            - 8081:8080
         env_file:
             - ureg.env
 
