@@ -1,5 +1,2 @@
 .idea
-ureg.env
-postgres.env
-mailer.env
-.env
+*.env
