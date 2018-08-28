@@ -1,5 +1,8 @@
 version: "3.6"
 services:
+    #
+    #TODO: add links to images and sources for every service
+    #
     #Postgres database server
     postgres:
         image: overseaslabs/example-postgres:latest
@@ -15,6 +18,19 @@ services:
             - .env
             - kong.env
             - mailer.env
+
+    #Kong API gate
+    kong:
+        image: overseaslabs/example-kong:latest
+        env_file:
+            - .env
+            - kong.env
+        networks:
+            - example_backend
+            - example_frontend
+        ports:
+            - 8000:8000
+            - 8001:8001
 
     #Redis server
     redis:
@@ -34,8 +50,12 @@ services:
             - example_frontend
         ports:
             - 8080:8080
+            - 5005:5005
         env_file:
             - ureg.env
+        volumes:
+            - "./ureg/build/libs/ureg-0.1.0.jar:/app/ureg-boot/lib/ureg-0.1.0.jar"
+        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/ureg-boot/lib/ureg-0.1.0.jar"]
 
     #Email sending and reporting
     mailer:
@@ -44,8 +64,12 @@ services:
             - example_backend
         ports:
             - 8081:8080
+            - 5006:5005
         env_file:
             - mailer.env
+        volumes:
+            - "./mailer/build/libs/mailer-0.1.0.jar:/app/mailer-boot/lib/mailer-0.1.0.jar"
+        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/mailer-boot/lib/mailer-0.1.0.jar"]
 
 volumes:
     #named volumes for storing the DB files
