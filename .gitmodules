@@ -7,3 +7,6 @@
 [submodule "postgres"]
 	path = postgres
 	url = git@github.com:overseaslabs/example-postgres.git
+[submodule "kong"]
+	path = kong
+	url = git@github.com:overseaslabs/example-kong.git
