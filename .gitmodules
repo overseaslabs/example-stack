@@ -10,3 +10,6 @@
 [submodule "kong"]
 	path = kong
 	url = git@github.com:overseaslabs/example-kong.git
+[submodule "web"]
+	path = web
+	url = git@github.com:overseaslabs/example-web.git

@@ -49,7 +49,6 @@ services:
             - example_backend
             - example_frontend
         ports:
-            - 8080:8080
             - 5005:5005
         env_file:
             - ureg.env
@@ -63,13 +62,26 @@ services:
         networks:
             - example_backend
         ports:
-            - 8081:8080
             - 5006:5005
         env_file:
             - mailer.env
         volumes:
             - "./mailer/build/libs/mailer-0.1.0.jar:/app/mailer-boot/lib/mailer-0.1.0.jar"
         command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/mailer-boot/lib/mailer-0.1.0.jar"]
+
+    #Web UI
+    web:
+        image: overseaslabs/example-web:latest
+        networks:
+            - example_backend
+            - example_frontend
+        ports:
+            - 8080:8080
+            - 5007:5005
+        volumes:
+            - "./web/backend/build/libs/backend-0.1.0.jar:/app/backend-boot/lib/backend-0.1.0.jar"
+        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/backend-boot/lib/backend-0.1.0.jar", "--debug"]
+
 
 volumes:
     #named volumes for storing the DB files
