@@ -63,6 +63,7 @@ services:
             - example_backend
         ports:
             - 5006:5005
+            - 8081:8080
         env_file:
             - mailer.env
         volumes:
