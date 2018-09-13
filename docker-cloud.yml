@@ -18,6 +18,7 @@ services:
             - .env
             - kong.env
             - mailer.env
+            - konga.env
 
     #Kong API gate
     kong:
@@ -31,6 +32,16 @@ services:
         ports:
             - 8000:8000
             - 8001:8001
+
+    #Kong UI
+    konga:
+        image: pantsel/konga:latest
+        env_file: konga.env
+        networks:
+            - example_backend
+            - example_frontend
+        ports:
+            - 1337:1337
 
     #Redis server
     redis:
