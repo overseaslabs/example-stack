@@ -64,8 +64,8 @@ services:
         env_file:
             - ureg.env
         volumes:
-            - "./ureg/build/libs/ureg-0.1.0.jar:/app/ureg-boot/lib/ureg-0.1.0.jar"
-        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/ureg-boot/lib/ureg-0.1.0.jar"]
+            - "./ureg/build/libs/ureg-1.0.0.jar:/app/ureg-boot/lib/ureg-1.0.0.jar"
+        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/ureg-boot/lib/ureg-1.0.0.jar"]
 
     #Email sending and reporting
     mailer:
@@ -78,8 +78,8 @@ services:
         env_file:
             - mailer.env
         volumes:
-            - "./mailer/build/libs/mailer-0.1.0.jar:/app/mailer-boot/lib/mailer-0.1.0.jar"
-        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/mailer-boot/lib/mailer-0.1.0.jar"]
+            - "./mailer/build/libs/mailer-1.0.0.jar:/app/mailer-boot/lib/mailer-1.0.0.jar"
+        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/mailer-boot/lib/mailer-1.0.0.jar"]
 
     #Web UI
     web:
@@ -91,8 +91,8 @@ services:
             - 8080:8080
             - 5007:5005
         volumes:
-            - "./web/backend/build/libs/backend-0.1.0.jar:/app/backend-boot/lib/backend-0.1.0.jar"
-        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/backend-boot/lib/backend-0.1.0.jar", "--debug"]
+            - "./web/backend/build/libs/backend-1.0.0.jar:/app/backend-boot/lib/backend-1.0.0.jar"
+        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/backend-boot/lib/backend-1.0.0.jar", "--debug"]
 
 
 volumes:
