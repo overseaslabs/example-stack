@@ -61,7 +61,7 @@ services:
 
     #Email sending and reporting
     mailer:
-        image: overseaslabs/example-mailer:1.0.0
+        image: overseaslabs/example-mailer:1.0.1
         networks:
             - example_backend
         env_file:
