@@ -70,6 +70,8 @@ services:
     #Web UI
     web:
         image: overseaslabs/example-web:1.0.0
+        ports:
+            - 80:8080
         networks:
             - example_backend
             - example_frontend
