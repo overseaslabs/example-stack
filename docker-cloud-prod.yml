@@ -1,11 +1,8 @@
 version: "3.6"
 services:
-    #
-    #TODO: add links to images and sources for every service
-    #
     #Postgres database server
     postgres:
-        image: overseaslabs/example-postgres:latest
+        image: overseaslabs/example-postgres:1.0.0
         networks:
             - example_backend
         volumes:
@@ -22,7 +19,7 @@ services:
 
     #Kong API gate
     kong:
-        image: overseaslabs/example-kong:latest
+        image: overseaslabs/example-kong:1.0.0
         env_file:
             - .env
             - kong.env
@@ -49,55 +46,38 @@ services:
         networks:
             - example_backend
         volumes:
-            - example_postgres_db:/var/lib/postgresql/data/pgdata
+            - example_redis:/var/lib/postgresql/data/pgdata
         ports:
             - 6379:6379
 
     #User registry microservice
     ureg:
-        image: overseaslabs/example-ureg:latest
+        image: overseaslabs/example-ureg:1.0.0
         networks:
             - example_backend
             - example_frontend
-        ports:
-            - 5005:5005
         env_file:
             - ureg.env
-        volumes:
-            - "./ureg/build/libs/ureg-1.0.0.jar:/app/ureg-boot/lib/ureg-1.0.0.jar"
-        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/ureg-boot/lib/ureg-1.0.0.jar"]
 
     #Email sending and reporting
     mailer:
-        image: overseaslabs/example-mailer:latest
+        image: overseaslabs/example-mailer:1.0.0
         networks:
             - example_backend
-        ports:
-            - 5006:5005
-            - 8081:8080
         env_file:
             - mailer.env
-        volumes:
-            - "./mailer/build/libs/mailer-1.0.0.jar:/app/mailer-boot/lib/mailer-1.0.0.jar"
-        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/mailer-boot/lib/mailer-1.0.0.jar"]
 
     #Web UI
     web:
-        image: overseaslabs/example-web:latest
+        image: overseaslabs/example-web:1.0.0
         networks:
             - example_backend
             - example_frontend
-        ports:
-            - 8080:8080
-            - 5007:5005
-        volumes:
-            - "./web/backend/build/libs/backend-1.0.0.jar:/app/backend-boot/lib/backend-1.0.0.jar"
-        command: ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/backend-boot/lib/backend-1.0.0.jar", "--debug"]
-
 
 volumes:
     #named volumes for storing the DB files
     example_postgres_db:
+    example_redis:
 
 networks:
     example_frontend:
